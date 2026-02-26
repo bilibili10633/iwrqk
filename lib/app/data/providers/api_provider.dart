@@ -522,7 +522,16 @@ class ApiProvider {
         finalResolutions.add(resolution);
       }
     }
-
+    // sort the resolutions list to make sure
+    // the index is functional
+    resolutions.sort((a, b) {
+      if (a.name == 'Source') return -1;
+      if (b.name == 'Source') return 1;
+      double valA = double.tryParse(a.name) ?? 0;
+      double valB = double.tryParse(b.name) ?? 0;
+      return valB.compareTo(valA);
+    });
+    
     return ApiResult(
       data: finalResolutions,
       success: resolutions.isNotEmpty,
