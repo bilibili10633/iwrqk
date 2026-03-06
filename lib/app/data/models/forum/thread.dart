@@ -24,7 +24,7 @@ class ThreadModel {
   });
 
   factory ThreadModel.fromJson(Map<String, dynamic> json) {
-    return ThreadModel(
+    var model = ThreadModel(
       id: json['id'],
       createdAt: json['createdAt'],
       title: json['title'],
@@ -34,5 +34,10 @@ class ThreadModel {
       sticky: json['sticky'],
       locked: json['locked'],
     );
+    if(json['lastPost']!=null){
+      model.lastPost=PostModel.fromJson(json['lastPost']);
+    }
+
+    return model;
   }
 }

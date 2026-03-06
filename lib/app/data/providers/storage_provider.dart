@@ -29,6 +29,7 @@ abstract class StorageKey {
   static const String proxyEnable = "proxyEnable";
   static const String proxyHost = "proxyHost";
   static const String proxyPort = "proxyPort";
+  static const String toAiSite = "toAiSite";
 }
 
 abstract class PLPlayerConfigKey {

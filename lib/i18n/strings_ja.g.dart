@@ -191,6 +191,7 @@ class _TranslationsSortJa extends TranslationsSortEn {
 	final TranslationsJa _root; // ignore: unused_field
 
 	// Translations
+	@override String get relevance => '関連性';
 	@override String get latest => '最新';
 	@override String get trending => 'トレンド';
 	@override String get popularity => '人気順';
@@ -227,6 +228,7 @@ class _TranslationsSearchJa extends TranslationsSearchEn {
 	// Translations
 	@override String get users => 'ユーザー';
 	@override String get search => '検索';
+	@override String get threads => "投稿";
 	@override late final _TranslationsSearchHistoryJa history = _TranslationsSearchHistoryJa._(_root);
 }
 

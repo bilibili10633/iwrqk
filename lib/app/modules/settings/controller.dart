@@ -114,6 +114,13 @@ class SettingsController extends GetxController {
   }
 
   bool get enablePreview => configService.enablePreview;
+
+  static final RxBool switchToAiSite =
+      ((StorageProvider.config[StorageKey.toAiSite] ?? false)==true).obs;
+
+
+
+
   set enablePreview(bool value) {
     configService.enablePreview = value;
     if (!value) {

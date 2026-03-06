@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:iwrqk/app/modules/settings/controller.dart';
 import 'package:iwrqk/i18n/strings.g.dart';
 
 import '../../components/load_empty.dart';
@@ -218,13 +219,15 @@ class _SearchPageState extends State<SearchPage> {
                   const Icon(Icons.search, size: 20),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(
+                    child: Obx(()=>Text(
+                      SettingsController.switchToAiSite.value?
+                      '${t.nav.search} (AI)':
                       t.nav.search,
                       style: TextStyle(
                         fontSize: 16,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                    ),
+                    ),)
                   ),
                   const SizedBox(width: 8),
                 ],

@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:iwrqk/i18n/strings.g.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../data/providers/storage_provider.dart';
+import '../../utils/log_util.dart';
+import '../home/controller.dart';
 import 'controller.dart';
 import 'widgets/custom_color_page.dart';
 import 'widgets/display_mode_dialog.dart';
@@ -469,6 +472,7 @@ class SettingsPage extends GetView<SettingsController> {
           if (GetPlatform.isAndroid) _buildDisplayModeButton(context),
           _buildWorkModeSetting(context),
           _buildAnimatedPreviewSetting(context),
+          _buildSwitchToAISite(context),
           SettingTitle(title: t.settings.network),
           _buildEnableProxySetting(context),
           _buildSetProxyButton(context),
@@ -490,6 +494,43 @@ class SettingsPage extends GetView<SettingsController> {
         ],
       ),
     );
+  }
+
+  Widget _buildSwitchToAISite(BuildContext context) {
+    return Obx(
+        ()=>_buildSwitchSetting(
+          context,
+          title: t.settings.to_ai_site,
+          description: t.settings.to_ai_site_desc,
+          iconData: Icons.smart_toy_rounded,
+          onChanged: (value) {
+            SettingsController.switchToAiSite.value=value;
+            StorageProvider.config[StorageKey.toAiSite]=value;
+            // Refresh all home page tabs when switching AI site
+            _refreshHomePageTabs();
+          },
+          value: SettingsController.switchToAiSite.value,
+        )
+    );
+  }
+
+  Future<void> _refreshHomePageTabs() async {
+    try {
+      // Get HomeController if it exists
+      if (Get.isRegistered<HomeController>()) {
+        final homeController = Get.find<HomeController>();
+        
+        // Refresh all media grid tab controllers (Videos, Images, Subscriptions)
+        for (var mediaController in homeController.mediaGridTabControllers) {
+          mediaController.refreshCurrentTab();
+        }
+        
+        // Refresh forum tab controller
+        homeController.forumTabController.refreshData(showSplash: false);
+      }
+    } catch (e) {
+      LogUtil.error('Failed to refresh home page tabs', e);
+    }
   }
 }
 

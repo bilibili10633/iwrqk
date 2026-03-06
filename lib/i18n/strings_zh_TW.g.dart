@@ -191,6 +191,7 @@ class _TranslationsSortZhTw extends TranslationsSortEn {
 	final TranslationsZhTw _root; // ignore: unused_field
 
 	// Translations
+	@override String get relevance => '関連性';
 	@override String get latest => '最新';
 	@override String get trending => '趨勢';
 	@override String get popularity => '熱門';
@@ -227,6 +228,7 @@ class _TranslationsSearchZhTw extends TranslationsSearchEn {
 	// Translations
 	@override String get users => '使用者';
 	@override String get search => '搜尋';
+	@override String get threads => "帖子";
 	@override late final _TranslationsSearchHistoryZhTw history = _TranslationsSearchHistoryZhTw._(_root);
 }
 

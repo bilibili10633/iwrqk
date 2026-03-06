@@ -1,6 +1,7 @@
 enum MediaType {
   video(value: "videos"),
-  image(value: "images");
+  image(value: "images"),
+  thread(value: "forum_threads");
 
   const MediaType({required this.value});
   final String value;
@@ -11,6 +12,8 @@ enum MediaType {
         return MediaType.video;
       case "image":
         return MediaType.image;
+      case "forum_threads":
+        return MediaType.thread;
       default:
         return MediaType.video;
     }
@@ -53,6 +56,7 @@ enum OrderType {
   date(value: "date"),
   trending(value: "trending"),
   popularity(value: "popularity"),
+  relevance(value: "relevance"),
   views(value: "views"),
   likes(value: "likes");
 
