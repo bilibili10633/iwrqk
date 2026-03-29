@@ -479,6 +479,8 @@ class _TranslationsSettingsJa extends TranslationsSettingsEn {
 	@override String get check_update_desc => '新しいバージョンが利用可能かどうかを確認します';
 	@override String get third_party_license => 'サードパーティのライセンス';
 	@override String get third_party_license_desc => 'サードパーティのライブラリのライセンスを確認します';
+	@override String get to_ai_site => 'AIサイトのコンテンツに切り替える';
+	@override String get to_ai_site_desc => 'AIサイトに切り替えてAIGCコンテンツを表示します';
 }
 
 // Path: theme
@@ -926,6 +928,8 @@ extension on TranslationsJa {
 			'settings.check_update_desc' => '新しいバージョンが利用可能かどうかを確認します',
 			'settings.third_party_license' => 'サードパーティのライセンス',
 			'settings.third_party_license_desc' => 'サードパーティのライブラリのライセンスを確認します',
+			'settings.to_ai_site' => 'AIサイトのコンテンツに切り替える',
+			'settings.to_ai_site_desc' => 'AIサイトに切り替えてAIGCコンテンツを表示します',
 			'theme.system' => 'システムに従う',
 			'theme.light' => 'ライト',
 			'theme.dark' => 'ダーク',

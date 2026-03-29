@@ -479,6 +479,8 @@ class _TranslationsSettingsZhTw extends TranslationsSettingsEn {
 	@override String get check_update_desc => '檢查是否有新版本可用';
 	@override String get third_party_license => '第三方庫許可';
 	@override String get third_party_license_desc => '查看第三方庫的許可證';
+	@override String get to_ai_site => '切換到AI站點內容';
+	@override String get to_ai_site_desc => '切換到AI站點查看AIGC內容';
 }
 
 // Path: theme
@@ -926,6 +928,8 @@ extension on TranslationsZhTw {
 			'settings.check_update_desc' => '檢查是否有新版本可用',
 			'settings.third_party_license' => '第三方庫許可',
 			'settings.third_party_license_desc' => '查看第三方庫的許可證',
+			'settings.to_ai_site' => '切換到AI站點內容',
+			'settings.to_ai_site_desc' => '切換到AI站點查看AIGC內容',
 			'theme.system' => '跟隨系統',
 			'theme.light' => '淺色',
 			'theme.dark' => '深色',
