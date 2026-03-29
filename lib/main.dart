@@ -36,10 +36,13 @@ Future<void> main() async {
 
   initGetx();
 
-  await SystemChrome.setPreferredOrientations([
+  //use device orientation
+  /*
+    await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  */
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
