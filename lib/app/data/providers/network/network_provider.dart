@@ -7,6 +7,8 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
+import 'package:iwrqk/app/data/providers/storage_provider.dart';
+import 'package:iwrqk/app/modules/settings/controller.dart';
 
 import '../../../const/iwara.dart';
 import 'refresh_token_interceptor.dart';
@@ -113,7 +115,10 @@ class NetworkProvider {
     final response = await _dio.get(
       url,
       queryParameters: queryParameters,
-      options: Options(headers: headers),
+      options: Options(
+          headers: !SettingsController.switchToAiSite.value
+              ?headers
+              :{"X-Site":"www.iwara.ai",...?headers}),
     );
 
     return Response(
@@ -136,7 +141,11 @@ class NetworkProvider {
     final response = await _dio.post(
       url,
       queryParameters: queryParameters,
-      options: Options(headers: headers, contentType: Headers.jsonContentType),
+      options: Options(
+          headers: !SettingsController.switchToAiSite.value
+              ?headers
+              :{"X-Site":"www.iwara.ai",...?headers},
+          contentType: Headers.jsonContentType),
       data: data,
     );
 

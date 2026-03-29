@@ -1,7 +1,7 @@
 class ConfigConst {
   static const String checkUpdateUrl =
-      "https://api.github.com/repos/iwrqk/iwrqk/releases";
+      "https://api.github.com/repos/h-sumiya/iwrqk/releases";
 
   static const String updateUrl =
-      "https://www.github.com/iwrqk/iwrqk/releases/latest";
+      "https://www.github.com/h-sumiya/iwrqk/releases/latest";
 }

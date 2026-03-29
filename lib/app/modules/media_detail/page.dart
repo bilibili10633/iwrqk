@@ -225,6 +225,8 @@ class _MediaDetailPageState extends State<MediaDetailPage>
         _controller.defaultST = plPlayerController!.position.value;
         plPlayerController!.removeStatusLister(playerListener);
         plPlayerController!.pause();
+        // 清理监听器以停止后台加载
+        plPlayerController!.removeListeners();
       }
       setState(() => isShowing = false);
     }
@@ -276,6 +278,8 @@ class _MediaDetailPageState extends State<MediaDetailPage>
     if (_controller.mediaType == MediaType.video) {
       if (plPlayerController != null) {
         plPlayerController!.removeStatusLister(playerListener);
+        // 移除监听器以确保后台加载被中断
+        plPlayerController!.removeListeners();
         plPlayerController!.dispose();
       }
       _controller.floating?.cancelOnLeavePiP();

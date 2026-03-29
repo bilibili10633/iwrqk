@@ -4,6 +4,7 @@ import 'package:auto_orientation_v2/auto_orientation_v2.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:window_manager/window_manager.dart';
 
 //横屏
 Future<void> landScape() async {
@@ -39,11 +40,19 @@ Future<void> verticalScreen() async {
 }
 
 Future<void> enterFullScreen() async {
+  if(Platform.isWindows){
+    await windowManager.setFullScreen(true);
+    return;
+  }
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 }
 
 //退出全屏显示
 Future<void> exitFullScreen() async {
+  if(Platform.isWindows){
+    await windowManager.setFullScreen(false);
+    return;
+  }
   dynamic document;
   late SystemUiMode mode = SystemUiMode.edgeToEdge;
   try {

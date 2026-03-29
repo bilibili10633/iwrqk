@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iwrqk/app/components/search_posts/search_post.dart';
 import 'package:iwrqk/i18n/strings.g.dart';
 
 import '../../components/media_preview/media_preview_grid/widget.dart';
@@ -13,22 +14,20 @@ class SearchResultPage extends GetView<SearchResultController> {
   const SearchResultPage({super.key});
 
   List<String> get tabNameList => [
+    t.sort.relevance,
     t.sort.latest,
-    t.sort.trending,
-    t.sort.popularity,
     t.sort.most_views,
     t.sort.most_likes,
   ];
 
   List<OrderType> get orderTypeList => [
+    OrderType.relevance,
     OrderType.date,
-    OrderType.trending,
-    OrderType.popularity,
     OrderType.views,
     OrderType.likes,
   ];
 
-  Widget _buildTabBar(BuildContext context) {
+  Widget _buildTabBar(BuildContext context,[List<Widget> Function()? tabsBuilder]) {
     return Container(
       padding: MediaQuery.of(context).padding.copyWith(bottom: 0, top: 4),
       alignment: Alignment.centerLeft,
@@ -38,7 +37,7 @@ class SearchResultPage extends GetView<SearchResultController> {
         dividerColor: Colors.transparent,
         indicatorSize: TabBarIndicatorSize.label,
         splashBorderRadius: BorderRadius.circular(8),
-        tabs: tabNameList.map((e) => Tab(text: e)).toList(),
+        tabs: tabsBuilder!=null?tabsBuilder():tabNameList.map((e) => Tab(text: e)).toList(),
       ),
     );
   }
@@ -103,6 +102,30 @@ class SearchResultPage extends GetView<SearchResultController> {
     );
   }
 
+  Widget _buildPostsTab(BuildContext context) {
+    return DefaultTabController(
+      length: 2,  //only supports 2 sort type here
+      child: Column(
+        children: [
+          _buildTabBar(context,
+              ()=>tabNameList.sublist(0,2).map((e)=>Tab(text: e,)).toList()),
+          Expanded(
+            child: TabBarView(
+              children: List.generate(
+                    2,
+                    (index) => SearchPost(
+                      keyword: controller.keyword,
+                      orderType: orderTypeList[index],
+                    )
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,6 +167,7 @@ class SearchResultPage extends GetView<SearchResultController> {
                   Tab(text: t.nav.videos),
                   Tab(text: t.nav.images),
                   Tab(text: t.search.users),
+                  Tab(text: t.search.threads),
                 ],
                 isScrollable: true,
                 indicatorWeight: 0,
@@ -175,6 +199,7 @@ class SearchResultPage extends GetView<SearchResultController> {
                   sortSetting: UsersSortSetting(keyword: controller.keyword),
                   tag: controller.childUsersControllerTag,
                 ),
+                _buildPostsTab(context)
               ],
             ),
           ),
@@ -182,4 +207,5 @@ class SearchResultPage extends GetView<SearchResultController> {
       ),
     );
   }
+
 }

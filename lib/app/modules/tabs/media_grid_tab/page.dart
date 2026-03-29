@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iwrqk/app/modules/settings/controller.dart';
 
 import '../../../components/media_preview/media_preview_grid/widget.dart';
 import '../../../data/enums/types.dart';
@@ -61,7 +62,9 @@ class _MediaGridTabPageState extends State<MediaGridTabPage>
                   dividerColor: Colors.transparent,
                   indicatorSize: TabBarIndicatorSize.label,
                   splashBorderRadius: BorderRadius.circular(8),
-                  tabs: widget.tabNameList.map((e) => Tab(text: e)).toList(),
+                  tabs: widget.tabNameList.map((e) => Tab(
+                      text: !SettingsController.switchToAiSite.value?e:"$e (AI)"
+                  )).toList(),
                 ),
               ),
             ),
@@ -78,35 +81,37 @@ class _MediaGridTabPageState extends State<MediaGridTabPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Column(
-      children: [
-        _buildTabBar(context),
-        Expanded(
-          child: SafeArea(
-            top: false,
-            bottom: false,
-            child: TabBarView(
-              controller: _controller.tabController,
-              children: List.generate(
-                widget.tabTagList.length,
-                (index) => MediaPreviewGrid(
-                  sourceType: widget.sourceType == null
-                      ? widget.customSourceTypeList![index]
-                      : widget.sourceType!,
-                  sortSetting: MediaSortSettingModel(
-                    orderType: widget.orderTypeList == null
-                        ? null
-                        : widget.orderTypeList![index],
+    return Obx(
+        ()=>Column(
+          children: [
+            _buildTabBar(context),
+            Expanded(
+              child: SafeArea(
+                top: false,
+                bottom: false,
+                child: TabBarView(
+                  controller: _controller.tabController,
+                  children: List.generate(
+                    widget.tabTagList.length,
+                        (index) => MediaPreviewGrid(
+                      sourceType: widget.sourceType == null
+                          ? widget.customSourceTypeList![index]
+                          : widget.sourceType!,
+                      sortSetting: MediaSortSettingModel(
+                        orderType: widget.orderTypeList == null
+                            ? null
+                            : widget.orderTypeList![index],
+                      ),
+                      tag: widget.tabTagList[index],
+                      scrollController: _controller.scrollControllers[index],
+                      applyFilter: true,
+                    ),
                   ),
-                  tag: widget.tabTagList[index],
-                  scrollController: _controller.scrollControllers[index],
-                  applyFilter: true,
                 ),
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        )
     );
   }
 

@@ -191,6 +191,7 @@ class _TranslationsSortZhCn extends TranslationsSortEn {
 	final TranslationsZhCn _root; // ignore: unused_field
 
 	// Translations
+	@override String get relevance => '相关度';
 	@override String get latest => '最新';
 	@override String get trending => '流行';
 	@override String get popularity => '人气';
@@ -227,6 +228,7 @@ class _TranslationsSearchZhCn extends TranslationsSearchEn {
 	// Translations
 	@override String get users => '用户';
 	@override String get search => '搜索';
+	@override String get threads => "帖子";
 	@override late final _TranslationsSearchHistoryZhCn history = _TranslationsSearchHistoryZhCn._(_root);
 }
 
@@ -477,6 +479,8 @@ class _TranslationsSettingsZhCn extends TranslationsSettingsEn {
 	@override String get check_update_desc => '检查是否有新版本可用';
 	@override String get third_party_license => '第三方库许可';
 	@override String get third_party_license_desc => '查看第三方库的许可证';
+	@override String get to_ai_site => '切换到AI站点内容';
+	@override String get to_ai_site_desc => '切换到AI站点查看AIGC内容';
 }
 
 // Path: theme
@@ -924,6 +928,8 @@ extension on TranslationsZhCn {
 			'settings.check_update_desc' => '检查是否有新版本可用',
 			'settings.third_party_license' => '第三方库许可',
 			'settings.third_party_license_desc' => '查看第三方库的许可证',
+			'settings.to_ai_site' => '切换到AI站点内容',
+			'settings.to_ai_site_desc' => '切换到AI站点查看AIGC内容',
 			'theme.system' => '跟随系统',
 			'theme.light' => '浅色',
 			'theme.dark' => '深色',

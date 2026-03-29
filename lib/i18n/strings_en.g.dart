@@ -301,6 +301,9 @@ class TranslationsSortEn {
 
 	// Translations
 
+	/// en: 'Relevance'
+	String get relevance => 'Relevance';
+
 	/// en: 'Latest'
 	String get latest => 'Latest';
 
@@ -372,6 +375,9 @@ class TranslationsSearchEn {
 
 	/// en: 'Search'
 	String get search => 'Search';
+
+	/// en: 'Posts'
+  String get threads => "Thread";
 
 	late final TranslationsSearchHistoryEn history = TranslationsSearchHistoryEn.internal(_root);
 }
@@ -886,6 +892,10 @@ class TranslationsSettingsEn {
 
 	/// en: 'View the license of third party libraries'
 	String get third_party_license_desc => 'View the license of third party libraries';
+
+  String get to_ai_site => "Switch to AI site content";
+
+  String get to_ai_site_desc => "Switch to AI site to see AIGC contents";
 }
 
 // Path: theme

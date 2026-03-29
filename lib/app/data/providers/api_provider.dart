@@ -998,6 +998,54 @@ class ApiProvider {
     );
   }
 
+  static Future<ApiResult<GroupResult<ThreadModel>>> searchThreads({
+    required String keyword,
+    required MediaType type,
+    required int pageNum,
+    OrderType? orderType,
+  }) async {
+    String? message;
+    int count = 0;
+    List<ThreadModel> threads = [];
+
+    await networkProvider
+        .get(
+      "/search",
+      queryParameters: {
+        "query": keyword,
+        "page": pageNum,
+        "type": type.value,
+        if (orderType != null) "sort": orderType.value,
+      },
+    )
+        .then((value) {
+      message = value.data["message"];
+
+      if (message != null) {
+        if (message == "errors.notFound") {
+          message = null;
+          threads = [];
+          count = 0;
+        }
+      } else {
+        threads = (value.data["results"] as List)
+            .map((e) => ThreadModel.fromJson(e))
+            .toList();
+        count=value.data['count'];
+      }
+    })
+        .catchError((e, stackTrace) {
+      message = e.toString();
+    });
+
+    return ApiResult(
+      data: GroupResult(count: count, results: threads),
+      success: message == null,
+      message: message,
+    );
+  }
+
+
   static Future<ApiResult<void>> followUser({required String userId}) async {
     String? message;
 

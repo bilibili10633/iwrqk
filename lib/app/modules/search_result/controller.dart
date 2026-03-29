@@ -37,7 +37,7 @@ class SearchResultController extends GetxController
 
     keyword = Get.arguments;
 
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
 
     for (String tag in childrenMediaControllerTags) {
       for (String tabTag in tabTagList) {
