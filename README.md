@@ -43,6 +43,6 @@ Special thanks to [guozhigq/pilipala](https://github.com/guozhigq/pilipala) for 
 
 Use Flutter **3.44.5 stable** (Dart 3.12.2), pinned in `mise.toml` and the release workflows. Run `flutter pub get --enforce-lockfile` and `flutter analyze --no-fatal-infos` before building.
 
-Push a `v*` version tag to build and publish Android APKs, a Windows ZIP, and an unsigned iOS IPA to GitHub Releases. Android releases use the repository's existing signing secrets. Manually triggered workflows upload build artifacts without creating a release.
+Push a `v*` version tag to build and publish Android APKs, a Windows ZIP, and an unsigned iOS IPA to GitHub Releases. Android releases use the repository's existing signing secrets. Manually triggered workflows upload build artifacts without creating a release. The Windows workflow accepts `source_ref` to rebuild an existing source tag and uses the Visual Studio 2022 runner supported by the current Flutter/WebView toolchain.
 
 Dependencies are updated to versions compatible with the pinned SDK. `dynamic_color` stays on the 1.x line because 2.x uses the separate `material_ui` widget and color types, while this application uses Flutter Material. `permission_handler` remains on 12.x because 13.x requires Android SDK 37 and AGP 9, beyond this Flutter toolchain. Android builds use Gradle 8.14.6, AGP 8.13.2, Kotlin 2.2.21, and Java 17; iOS CI uses Xcode 26.3 to meet plugin requirements.
