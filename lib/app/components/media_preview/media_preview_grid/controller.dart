@@ -1,7 +1,5 @@
-import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:iwrqk/app/modules/settings/controller.dart';
 
 import '../../../data/enums/result.dart';
 import '../../../data/enums/types.dart';

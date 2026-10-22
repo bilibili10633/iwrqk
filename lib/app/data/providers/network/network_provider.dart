@@ -7,7 +7,6 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
-import 'package:iwrqk/app/data/providers/storage_provider.dart';
 import 'package:iwrqk/app/modules/settings/controller.dart';
 
 import '../../../const/iwara.dart';
