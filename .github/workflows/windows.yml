@@ -5,6 +5,11 @@ on:
     tags:
       - v*
   workflow_dispatch:
+    inputs:
+      source_ref:
+        description: "Optional source tag or commit to rebuild"
+        required: false
+        type: string
 
 env:
   APP_PACK_NAME: iwrqk
@@ -15,20 +20,24 @@ permissions:
 jobs:
   build_and_upload:
     name: Build Windows release
-    runs-on: windows-latest
+    # Flutter 3.44 and the WebView plugin use the supported VS 2022 toolchain.
+    runs-on: windows-2022
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: "recursive"
+          ref: ${{ inputs.source_ref || github.ref }}
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
-          channel: beta
+          channel: stable
+          flutter-version: "3.44.5"
+          cache: true
 
       - name: Install dependencies
-        run: flutter pub get
+        run: flutter pub get --enforce-lockfile
 
       - name: Enable Windows
         run: flutter config --enable-windows-desktop
@@ -43,14 +52,12 @@ jobs:
         run: flutter build windows --release
 
       - name: Zip artifact
-        uses: thedoctor0/zip-release@main
-        with:
-          type: "zip"
-          filename: ${{ env.APP_PACK_NAME }}-${{ steps.get_version.outputs.version }}-windows.zip
-          directory: build/windows/x64/runner/Release
+        shell: pwsh
+        run: |
+          Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath "build/windows/x64/runner/Release/${{ env.APP_PACK_NAME }}-${{ steps.get_version.outputs.version }}-windows.zip"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: release-windows
           path: build/windows/x64/runner/Release/${{ env.APP_PACK_NAME }}-${{ steps.get_version.outputs.version }}-windows.zip
@@ -62,23 +69,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - run: mkdir /tmp/artifacts
 
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           path: /tmp/artifacts
 
       - name: Publish GitHub release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
         with:
           artifacts: "/tmp/artifacts/release-windows/*.zip"
           tag: ${{ github.ref_name }}
-          prerelease: contains(github.ref, 'pre')
+          prerelease: ${{ contains(github.ref_name, 'pre') }}
           allowUpdates: true
           artifactErrorsFailBuild: true
           replacesArtifacts: false

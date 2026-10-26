@@ -166,7 +166,7 @@ class SettingsController extends GetxController {
     String? result;
 
     try {
-      result = await FilePicker.platform.getDirectoryPath();
+      result = await FilePicker.getDirectoryPath();
     } on Exception catch (e) {
       LogUtil.error('Pick download path failed', e);
     }
